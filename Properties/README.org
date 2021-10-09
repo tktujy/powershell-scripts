@@ -1,0 +1,30 @@
+* Properties 模块
+** 目的
+   读写 java properties 文件。
+   
+** 用法
+*** 导入这个模块
+#+begin_src powershell
+Import-Module Properties
+#+end_src
+
+*** 函数
+#+begin_src powershell
+ConvertFrom-Properties [-InputObject] <string[]>
+ConvertTo-Properties [-InputObject] <IDictionary[]>
+Import-Properties [-Path] <Object>
+Export-Properties [-InputObject] <IDictionary[]> [-Path] <Object>
+#+end_src
+
+    用法类似 ~ConvertFrom-Csv~ 、 ~ConvertTo-Csv~ 、 ~Import-Csv~ 、 ~Export-Csv~ 。
+
+*** 示例
+#+begin_src powershell
+"name=INT" | ConvertFrom-Properties
+
+@{name="INT"} | ConvertTo-Properties
+
+Export-Properties @{name="INT"} -Path test.properties
+
+Import-Properties -Path test.properties
+#+end_src

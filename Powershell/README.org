@@ -1,0 +1,71 @@
+* Powershell 模块
+** 目的
+   安装、卸载指定版本的 PWSH，还有在不同版本之间切换。
+
+** 用法
+*** 导入这个模块
+#+begin_src powershell
+Import-Module Powershell
+#+end_src
+
+*** 获取已经安装的 PWSH 信息
+#+begin_src powershell
+Get-PowershellInstalledVersion [[-Version] <string>]
+#+end_src
+
+*** 获取可以安装的 PWSH 信息
+#+begin_src powershell
+Get-PowershellAvailableVersion [[-Version] <string>] [-Force]
+#+end_src
+
+    获取可以安装的 PWSH 信息。成功执行后，会存在变量里做缓存。如果需要再次从网络获取，加 ~-Force~ 参数。
+    
+*** 安装
+#+begin_src powershell
+Install-Powershell [-Version] <string> [-Switch]
+#+end_src
+
+    安装指定版本的 PWSH。安装之前调用 ~Get-PowershellAvailableVersion~ ，获取相关信息。如果需要同时切换到这个版本，加 ~-Switch~ 参数。
+
+*** 卸载
+#+begin_src powershell
+Uninstall-Powershell [-Version] <string>
+#+end_src
+
+    卸载指定版本的 PWSH。
+
+*** 切换
+#+begin_src powershell
+Switch-Powershell [-Version] <string>
+#+end_src
+
+    切换到指定版本的 PWSH。
+
+
+** 示例
+#+begin_src
+PS /tmp> Get-PowershellInstalledVersion 
+
+Name   Path                   Symlink
+----   ----                   -------
+v7.1.4 /opt/powershell/v7.1.4 /usr/bin/pwshv7.1.4
+
+PS /tmp> Get-PowershellAvailableVersion                                                                                                                                               
+                                                                                                                                                                                      
+Name              Url                                                                                                                                                                 
+----              ---                                                                                                                                                                 
+v7.2.0-preview.10 https://github.com/PowerShell/PowerShell/releases/download/v7.2.0-preview.10/powershell-7.2.0-preview.10-linux-x64.tar.gz                                           
+v7.2.0-preview.9  https://github.com/PowerShell/PowerShell/releases/download/v7.2.0-preview.9/powershell-7.2.0-preview.9-linux-x64.tar.gz                                             
+v7.1.4            https://github.com/PowerShell/PowerShell/releases/download/v7.1.4/powershell-7.1.4-linux-x64.tar.gz                                                                 
+v7.0.7            https://github.com/PowerShell/PowerShell/releases/download/v7.0.7/powershell-7.0.7-linux-x64.tar.gz 
+...
+
+PS /tmp> Install-Powershell v7.0.7 -Switch
+...
+
+PS /tmp> Uninstall-Powershell v7.0.7
+...
+
+PS /tmp> Switch-Powershell v7.1.4
+...
+#+end_src
